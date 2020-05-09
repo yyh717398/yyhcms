@@ -25,6 +25,11 @@ public class Channel implements Serializable{
 	
 	
 	@Override
+	public String toString() {
+		return "Channel [id=" + id + ", name=" + name + ", description=" + description + ", icon=" + icon + ", sorted="
+				+ sorted + "]";
+	}
+	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;

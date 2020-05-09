@@ -12,6 +12,7 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.github.pagehelper.PageInfo;
 import com.yyh.cms.domain.Article;
 import com.yyh.cms.service.ArticleService;
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -24,8 +25,8 @@ public class ArticleServiceImplTest {
 
 	@Test
 	public void testSelects() {
-		List<Article> selects = articleService.selects();
-		
+		PageInfo<Article> selects = articleService.selects(new Article(), 1, 10);
+		System.out.println(selects.getList());
 	}
 
 }

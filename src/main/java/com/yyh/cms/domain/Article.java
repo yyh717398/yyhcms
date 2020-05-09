@@ -39,6 +39,14 @@ public class Article implements Serializable{
 	
 	
 	@Override
+	public String toString() {
+		return "Article [id=" + id + ", title=" + title + ", summary=" + summary + ", content=" + content + ", picture="
+				+ picture + ", channelId=" + channelId + ", categoryId=" + categoryId + ", userId=" + userId + ", hits="
+				+ hits + ", hot=" + hot + ", status=" + status + ", deleted=" + deleted + ", created=" + created
+				+ ", updated=" + updated + ", contentType=" + contentType + ", user=" + user + ", channel=" + channel
+				+ ", category=" + category + "]";
+	}
+	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;

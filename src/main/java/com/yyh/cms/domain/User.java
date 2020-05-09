@@ -27,12 +27,15 @@ public class User implements Serializable{
 	private Integer id;//id
 	private String username;//用户名
 	private String password;//密码
+	private String repassword;//确认密码 冗余属性
 	private String nickname;//昵称
 	private Date birthday;
 	private Integer gender;//性别 0女 1男
 	private Integer locked;//0正常 1禁用
 	private Date created;//创建时间
 	private Date updated;//修改时间
+	private Integer role;//1：管理员 0：普通用户
+	
 	public Integer getId() {
 		return id;
 	}
@@ -50,6 +53,13 @@ public class User implements Serializable{
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	
+	public String getRepassword() {
+		return repassword;
+	}
+	public void setRepassword(String repassword) {
+		this.repassword = repassword;
 	}
 	public String getNickname() {
 		return nickname;
@@ -86,6 +96,13 @@ public class User implements Serializable{
 	}
 	public void setUpdated(Date updated) {
 		this.updated = updated;
+	}
+	
+	public Integer getRole() {
+		return role;
+	}
+	public void setRole(Integer role) {
+		this.role = role;
 	}
 	@Override
 	public int hashCode() {
