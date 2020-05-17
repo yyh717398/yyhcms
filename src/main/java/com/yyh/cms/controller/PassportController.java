@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.yangyuhao.common.utils.DateUtil;
 import com.yyh.cms.domain.User;
 import com.yyh.cms.service.UserService;
 import com.yyh.cms.util.CMSException;
@@ -97,7 +98,6 @@ public class PassportController {
 	@PostMapping("reg")
 	public CMSResult<User> reg(User user){
 		CMSResult<User> result = new CMSResult<>();
-
 		try {
 			userService.insertUser(user);
 			result.setCode(200);

@@ -43,14 +43,17 @@ String htmlData = request.getParameter("content1") != null ? request.getParamete
 <body>
 
 	<form id="form1">
+		<!-- 微信来源 -->
+		微信来源
+		<input type="text" name="wx">
 		<!-- 文章标题 -->
 		<div class="form-group">
-			<label for="title">标题图片:</label> <input id="title" type="text"
+			<label for="title">标题:</label> <input id="title" type="text"
 				name="title" class="form-control">
 		</div>
 		<!-- 文章标题图片 -->
 		<div class="form-group">
-			<label for="picture">文章标题:</label>
+			<label for="picture">标题图片:</label>
 			 <input id="picture" type="file"
 				name="file" class="form-control-file">
 		</div>
@@ -95,7 +98,7 @@ String htmlData = request.getParameter("content1") != null ? request.getParamete
 	//发布文章
 		function publish(){
 		var formData = new FormData($("#form1")[0]);
-		 formData.set("content",editor1.html()); 
+		 formData.set("content",editor1.html()); //获得文本域中的html属性 并封装到formData中
 			
 			/* formDate.set("content",editor1.html());  */
 			

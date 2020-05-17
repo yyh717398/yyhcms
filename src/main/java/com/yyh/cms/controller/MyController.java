@@ -122,7 +122,6 @@ public class MyController {
 			Article article,
 			HttpSession session){
 		//判断是否选中文件
-		System.out.println(file.getOriginalFilename());
 		if(null!=file && !file.isEmpty()){
 			
 			//文件上传地址

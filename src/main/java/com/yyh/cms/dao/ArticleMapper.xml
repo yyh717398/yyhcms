@@ -18,11 +18,16 @@
  		<result property="created" column="created"/>
  		<result property="updated" column="updated"/>
  		<result property="content_type" column="contentType"/>
+ 		<result property="wx" column="wx"/>
  		<association property="user" javaType="User" column="user_id" select="selectUserById"></association>
  		<association property="channel" javaType="Channel" column="channel_id" select="selectChannelById"></association>
  		<association property="category" javaType="CateGory" column="cateGory_id" select="selectCateGoryById"></association>
  	</resultMap>
- 	
+ 	<!-- 按照评论数量查询文章 -->
+ 	<select id="selectsOrderComments" resultMap="articleResultMap">
+ 		select * from cms_article order by comments desc
+ 	</select>
+ 	<!-- 查询文章 -->
  	<select id="select" resultMap="articleResultMap">
  		select * from cms_article where id=#{id}
  	</select>
@@ -81,8 +86,8 @@
  	<!-- 增加文章 -->
  	<insert id="insert">
  		insert into cms_article(title,picture,content,channel_id,category_id,user_id,
-   created,updated,content_type,status,hot,deleted) values(#{title},#{picture},#{content},#{channelId},#{categoryId},#{userId},
-   #{created},#{updated},#{contentType},#{status},#{hot},#{deleted})
+   created,updated,content_type,status,hot,deleted,wx) values(#{title},#{picture},#{content},#{channelId},#{categoryId},#{userId},
+   #{created},#{updated},#{contentType},#{status},#{hot},#{deleted},#{wx})
  	</insert>
  	
  	<!-- 更新文章 -->

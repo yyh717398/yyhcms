@@ -17,7 +17,13 @@ import com.yyh.cms.domain.Article;
 import com.yyh.cms.domain.User;
 import com.yyh.cms.service.ArticleService;
 import com.yyh.cms.service.UserService;
-
+/**
+ * 
+ * @ClassName: AdminController 
+ * @Description: 管理员
+ * @author: dell
+ * @date: 2020年5月10日 下午8:42:03
+ */
 @Controller
 @RequestMapping("admin")
 public class AdminController {

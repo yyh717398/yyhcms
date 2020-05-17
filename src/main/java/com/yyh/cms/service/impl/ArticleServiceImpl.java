@@ -12,15 +12,14 @@ import com.yyh.cms.domain.Article;
 import com.yyh.cms.service.ArticleService;
 
 @Service
-public class ArticleServiceImpl implements ArticleService{
+public class ArticleServiceImpl implements ArticleService {
 	@Autowired
 	private ArticleMapper articleMapper;
 
 	@Override
 	public PageInfo<Article> selects(Article article, Integer pageNum, Integer pageSize) {
 		PageHelper.startPage(pageNum, pageSize);
-		
-		
+
 		List<Article> selects = articleMapper.selects(article);
 		return new PageInfo<Article>(selects);
 	}
@@ -43,7 +42,12 @@ public class ArticleServiceImpl implements ArticleService{
 		return articleMapper.update(article);
 	}
 
-	
-	
-	
+	@Override
+	public PageInfo<Article> selectsOrderComments(Article article,Integer pageNum,Integer pageSize) {
+		PageHelper.startPage(pageNum, pageSize);
+
+		List<Article> selects = articleMapper.selectsOrderComments(article);
+		return new PageInfo<Article>(selects);
+	}
+
 }

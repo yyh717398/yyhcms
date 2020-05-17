@@ -36,15 +36,24 @@ public class Article implements Serializable{
 	private User user;//封装对象
 	private Channel channel;//封装对象
 	private Category category;//封装对象
+	private Integer comments;//评论数量
+	private String wx;//微信公众号
+	private String createdString;
 	
-	
+	public String getCreatedString() {
+		return createdString;
+	}
+	public void setCreatedString(String createdString) {
+		this.createdString = createdString;
+	}
 	@Override
 	public String toString() {
 		return "Article [id=" + id + ", title=" + title + ", summary=" + summary + ", content=" + content + ", picture="
 				+ picture + ", channelId=" + channelId + ", categoryId=" + categoryId + ", userId=" + userId + ", hits="
 				+ hits + ", hot=" + hot + ", status=" + status + ", deleted=" + deleted + ", created=" + created
 				+ ", updated=" + updated + ", contentType=" + contentType + ", user=" + user + ", channel=" + channel
-				+ ", category=" + category + "]";
+				+ ", category=" + category + ", comments=" + comments + ", wx=" + wx + ", createdString="
+				+ createdString + "]";
 	}
 	@Override
 	public int hashCode() {
@@ -86,6 +95,13 @@ public class Article implements Serializable{
 	}
 	public void setTitle(String title) {
 		this.title = title;
+	}
+	
+	public String getWx() {
+		return wx;
+	}
+	public void setWx(String wx) {
+		this.wx = wx;
 	}
 	public String getSummary() {
 		return summary;
@@ -182,6 +198,12 @@ public class Article implements Serializable{
 	}
 	public void setCategory(Category category) {
 		this.category = category;
+	}
+	public Integer getComments() {
+		return comments;
+	}
+	public void setComments(Integer comments) {
+		this.comments = comments;
 	}
 	
 	

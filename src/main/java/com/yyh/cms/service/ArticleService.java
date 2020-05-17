@@ -1,5 +1,7 @@
 package com.yyh.cms.service;
 
+import java.util.List;
+
 import com.github.pagehelper.PageInfo;
 import com.yyh.cms.domain.Article;
 /**
@@ -55,5 +57,13 @@ public interface ArticleService {
 	 */
 	
 	PageInfo<Article> selects(Article article,Integer pageNum,Integer pageSize);
-	
+	/**
+	 * 
+	 * @Title: selectsOrderComments 
+	 * @Description: 按照评论数量显示文章
+	 * @param article
+	 * @return
+	 * @return: PageInfo<Article>
+	 */
+	PageInfo<Article> selectsOrderComments(Article article,Integer pageNum,Integer pageSize);
 }

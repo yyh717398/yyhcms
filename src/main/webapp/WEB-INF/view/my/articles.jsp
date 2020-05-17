@@ -13,8 +13,9 @@
 
 <body>
 	<div class="container">
-		<c:forEach items="${info.list }" var="article">
+		<c:forEach items="${info.list }" var="article" >
 			<div class="media">
+			
 			<!-- 文章标题图片 -->
 				<img src="/pic/${article.picture }" class="mr-3 rounded-circle"
 					alt="..." width="156px" height="101.8px">

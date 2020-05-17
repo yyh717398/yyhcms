@@ -1,6 +1,10 @@
 package com.yyh.cms.dao;
 
 import java.util.List;
+
+
+import com.yyh.cms.domain.Category;
+import com.yyh.cms.domain.Channel;
 /**
  * 
  * @ClassName: ChannelMapper 
@@ -8,9 +12,6 @@ import java.util.List;
  * @author: dell
  * @date: 2020年4月29日 下午8:25:01
  */
-
-import com.yyh.cms.domain.Category;
-import com.yyh.cms.domain.Channel;
 public interface ChannelMapper {
 	/**
 	 * 

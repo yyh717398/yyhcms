@@ -4,21 +4,27 @@ import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.pagehelper.PageInfo;
 import com.yangyuhao.common.utils.DateUtil;
+import com.yyh.cms.dao.CommentsMapper;
 import com.yyh.cms.domain.Article;
 import com.yyh.cms.domain.Category;
 import com.yyh.cms.domain.Channel;
+import com.yyh.cms.domain.Comments;
 import com.yyh.cms.domain.Slide;
+import com.yyh.cms.domain.User;
 import com.yyh.cms.service.ArticleService;
 import com.yyh.cms.service.ChannelService;
+import com.yyh.cms.service.CommentsService;
 import com.yyh.cms.service.SlideService;
 /**
  * 
@@ -35,6 +41,8 @@ public class IndexController {
 	private ArticleService articleService;
 	@Resource
 	private SlideService slideService;
+	@Resource
+	private CommentsService commentsService;
 	/**
 	 * 
 	 * @Title: index 
@@ -46,6 +54,7 @@ public class IndexController {
 	public String index(Model model,Article article,
 			@RequestParam(defaultValue="1")Integer pageNum,
 			@RequestParam(defaultValue="5")Integer pageSize){
+		
 		//1.查询所有栏目
 		List<Channel> channels = channelService.selects();
 		//只显示审核通过的文章
@@ -54,6 +63,7 @@ public class IndexController {
 		//2.根据栏目id查询所有分类
 		List<Category> categorys = channelService.selectCategoryByChannelId(article.getChannelId());
 		model.addAttribute("categorys", categorys);
+		
 		model.addAttribute("article", article);
 		//3.查询栏目下的文章
 			//3.判断栏目id是否为空
@@ -82,6 +92,7 @@ public class IndexController {
 		model.addAttribute("hot24Articles", hot24Articles);
 		return "index/index";
 	}
+	
 	/**
 	 * 
 	 * @Title: articleDetail 
@@ -90,11 +101,41 @@ public class IndexController {
 	 * @return: String
 	 */
 	@GetMapping("articleDetail")
-	public String articleDetail(Integer id,Model model){
+	public String articleDetail(Integer id,
+			Model model,
+			@RequestParam(defaultValue="1")Integer pageNum,
+			@RequestParam(defaultValue="5")Integer pageSize){
 		
 		Article article = articleService.select(id);
+		String displayTime = DateUtil.getDisplayTime(article.getCreated()); 
+		article.setCreatedString(displayTime);
+		System.out.println(article.getCreatedString());
+		//查询当前文章所有评论
+		PageInfo<Comments> info = commentsService.selects(article.getId(), pageNum, pageSize);
 		model.addAttribute("article", article);
+		model.addAttribute("info", info);
+		//查询评论数量最高的文章
+		PageInfo<Article> info2 = articleService.selectsOrderComments(null, 1, 5);
+		model.addAttribute("info2", info2);
 		return "index/articleDetail";
+	}
+	
+	/**
+	 * 
+	 * @Title: addComments 
+	 * @Description: 增加评论
+	 * @return
+	 * @return: boolean
+	 */
+	@RequestMapping("addComments")
+	@ResponseBody
+	public boolean addComments(Comments comments,HttpSession session){
+		//封装评论人
+		User user = (User) session.getAttribute("user");
+		comments.setUserId(user.getId());
+		//封装评论时间
+		comments.setCreated(new Date());
+		return commentsService.intsert(comments);
 	}
 	
 }
