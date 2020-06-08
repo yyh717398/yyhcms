@@ -6,6 +6,9 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
+import org.apache.poi.ss.formula.functions.Vlookup;
+import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
+import org.springframework.data.elasticsearch.core.aggregation.AggregatedPage;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +18,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.pagehelper.PageInfo;
 import com.yangyuhao.common.utils.DateUtil;
-import com.yyh.cms.dao.CommentsMapper;
 import com.yyh.cms.domain.Article;
 import com.yyh.cms.domain.Category;
 import com.yyh.cms.domain.Channel;
@@ -26,6 +28,7 @@ import com.yyh.cms.service.ArticleService;
 import com.yyh.cms.service.ChannelService;
 import com.yyh.cms.service.CommentsService;
 import com.yyh.cms.service.SlideService;
+import com.yyh.cms.util.EsUtils;
 /**
  * 
  * @ClassName: IndexController 
@@ -43,6 +46,10 @@ public class IndexController {
 	private SlideService slideService;
 	@Resource
 	private CommentsService commentsService;
+	@Resource
+	private ElasticsearchTemplate elasticsearchTemplate;
+	
+	
 	/**
 	 * 
 	 * @Title: index 
@@ -92,6 +99,63 @@ public class IndexController {
 		model.addAttribute("hot24Articles", hot24Articles);
 		return "index/index";
 	}
+	
+	/**
+	 * 
+	 * @Title: serch 
+	 * @Description: 高亮
+	 * @param model
+	 * @param article
+	 * @param pageNum
+	 * @param pageSize
+	 * @return
+	 * @return: String
+	 */
+	@RequestMapping(value={"serch"})
+	public String serch(Model model,Article article,
+			@RequestParam(defaultValue="1")Integer pageNum,
+			@RequestParam(defaultValue="5")Integer pageSize,
+			String value){
+		System.out.println(value);
+		model.addAttribute("value", value);
+		//1.查询所有栏目
+		List<Channel> channels = channelService.selects();
+		//只显示审核通过的文章
+		article.setStatus(1);
+		model.addAttribute("channels", channels);
+		//2.根据栏目id查询所有分类
+		List<Category> categorys = channelService.selectCategoryByChannelId(article.getChannelId());
+		model.addAttribute("categorys", categorys);
+		
+		model.addAttribute("article", article);
+		AggregatedPage<?> info = EsUtils.selectObjects(elasticsearchTemplate,
+				Article.class,
+				pageSize,
+				pageNum,
+				new String[] {"title"},
+				value,
+				"id");
+		model.addAttribute("info", info);
+		//4显示热点文章 和广告 
+		if(article.getChannelId()==null){
+			
+			//广告
+			List<Slide> slides = slideService.selectsSlides();
+			model.addAttribute("slides", slides);
+		}
+		
+		//右侧边栏显示24小时内文章
+		Article article2 = new Article();
+		//只显示审核通过的文章
+		article2.setStatus(1);
+		article2.setHot(1);//热点文章
+		article2.setCreated(DateUtil.SubDate(new Date(), 24));//当前系统时间减去24小时
+		PageInfo<Article> hot24Articles = articleService.selects(article2, 1, 5);
+		model.addAttribute("hot24Articles", hot24Articles);
+		return "index/serch";
+	}
+	
+	
 	
 	/**
 	 * 

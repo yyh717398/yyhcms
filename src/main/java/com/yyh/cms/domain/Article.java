@@ -3,6 +3,10 @@ package com.yyh.cms.domain;
 import java.io.Serializable;
 import java.util.Date;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.elasticsearch.annotations.Document;
+
+
 /**
  * 
  * @ClassName: Article 
@@ -10,6 +14,7 @@ import java.util.Date;
  * @author: dell
  * @date: 2020年4月27日 下午8:21:02
  */
+@Document(indexName="article_es",type="article")
 public class Article implements Serializable{
 	
 	/**
@@ -18,6 +23,7 @@ public class Article implements Serializable{
 	 * @Description: TODO
 	 */
 	private static final long serialVersionUID = 1L;
+	@Id
 	private Integer id;
 	private String title;//标题
 	private String summary;//摘要
@@ -40,49 +46,23 @@ public class Article implements Serializable{
 	private String wx;//微信公众号
 	private String createdString;
 	
-	public String getCreatedString() {
-		return createdString;
+	public User getUser() {
+		return user;
 	}
-	public void setCreatedString(String createdString) {
-		this.createdString = createdString;
+	public void setUser(User user) {
+		this.user = user;
 	}
-	@Override
-	public String toString() {
-		return "Article [id=" + id + ", title=" + title + ", summary=" + summary + ", content=" + content + ", picture="
-				+ picture + ", channelId=" + channelId + ", categoryId=" + categoryId + ", userId=" + userId + ", hits="
-				+ hits + ", hot=" + hot + ", status=" + status + ", deleted=" + deleted + ", created=" + created
-				+ ", updated=" + updated + ", contentType=" + contentType + ", user=" + user + ", channel=" + channel
-				+ ", category=" + category + ", comments=" + comments + ", wx=" + wx + ", createdString="
-				+ createdString + "]";
+	public Channel getChannel() {
+		return channel;
 	}
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((title == null) ? 0 : title.hashCode());
-		return result;
+	public void setChannel(Channel channel) {
+		this.channel = channel;
 	}
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Article other = (Article) obj;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		if (title == null) {
-			if (other.title != null)
-				return false;
-		} else if (!title.equals(other.title))
-			return false;
-		return true;
+	public Category getCategory() {
+		return category;
+	}
+	public void setCategory(Category category) {
+		this.category = category;
 	}
 	public Integer getId() {
 		return id;
@@ -95,13 +75,6 @@ public class Article implements Serializable{
 	}
 	public void setTitle(String title) {
 		this.title = title;
-	}
-	
-	public String getWx() {
-		return wx;
-	}
-	public void setWx(String wx) {
-		this.wx = wx;
 	}
 	public String getSummary() {
 		return summary;
@@ -181,30 +154,38 @@ public class Article implements Serializable{
 	public void setContentType(String contentType) {
 		this.contentType = contentType;
 	}
-	public User getUser() {
-		return user;
-	}
-	public void setUser(User user) {
-		this.user = user;
-	}
-	public Channel getChannel() {
-		return channel;
-	}
-	public void setChannel(Channel channel) {
-		this.channel = channel;
-	}
-	public Category getCategory() {
-		return category;
-	}
-	public void setCategory(Category category) {
-		this.category = category;
-	}
 	public Integer getComments() {
 		return comments;
 	}
 	public void setComments(Integer comments) {
 		this.comments = comments;
 	}
+	public String getWx() {
+		return wx;
+	}
+	public void setWx(String wx) {
+		this.wx = wx;
+	}
+	public String getCreatedString() {
+		return createdString;
+	}
+	public void setCreatedString(String createdString) {
+		this.createdString = createdString;
+	}
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+	@Override
+	public String toString() {
+		return "Article [id=" + id + ", title=" + title + ", summary=" + summary + ", content=" + content + ", picture="
+				+ picture + ", channelId=" + channelId + ", categoryId=" + categoryId + ", userId=" + userId + ", hits="
+				+ hits + ", hot=" + hot + ", status=" + status + ", deleted=" + deleted + ", created=" + created
+				+ ", updated=" + updated + ", contentType=" + contentType + ", comments=" + comments + ", wx=" + wx
+				+ ", createdString=" + createdString + "]";
+	}
+	
+	
+	
 	
 	
 

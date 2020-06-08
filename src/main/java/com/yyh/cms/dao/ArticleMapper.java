@@ -51,6 +51,7 @@ public interface ArticleMapper {
 	 * @return: List<Article>
 	 */
 	List<Article> selects(Article article);
+	List<Article> selects_(Article article);
 	/**
 	 * 
 	 * @Title: selectsOrderComments 

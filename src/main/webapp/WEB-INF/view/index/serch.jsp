@@ -102,7 +102,7 @@
 			<div class="col-md-7">
 				<div>
 					<form action="/serch" method="post">
-					<input type="text" name="serch">
+					<input type="text" name="value" value="${value }">
 					<button class="btn btn-info">搜索</button>
 					</form>
 				</div>
@@ -143,7 +143,7 @@
 					<!-- 热点文章 -->
 					<div class="mt-2">
 						<ul class="list-unstyled">
-							<c:forEach items="${info.list }" var="article">
+							<c:forEach items="${info.content }" var="article">
 								<li class="media"><img src="/pic/${article.picture }"
 									style="height: 101.8px; width: 156px" class="mr-3 rounded"
 									alt="...">
@@ -159,7 +159,7 @@
 								<hr>
 							</c:forEach>
 						</ul>
-						<jsp:include page="/WEB-INF/view/common/pages.jsp"></jsp:include>
+						<jsp:include page="/WEB-INF/view/common/page.jsp"></jsp:include>
 					</div>
 				</c:if>
 
@@ -180,7 +180,7 @@
 					<!-- 显示分类下文章 -->
 					<div>
 						<ul class="list-unstyled">
-							<c:forEach items="${info.list }" var="article">
+							<c:forEach items="${info.content }" var="article">
 								<li class="media"><img src="/pic/${article.picture }"
 									style="height: 101.8px; width: 156px" class="mr-3 rounded"
 									alt="...">
@@ -196,7 +196,7 @@
 								<hr>
 							</c:forEach>
 						</ul>
-						<jsp:include page="/WEB-INF/view/common/pages.jsp"></jsp:include>
+						<jsp:include page="/WEB-INF/view/common/page.jsp"></jsp:include>
 					</div>
 				</c:if>
 			</div>
